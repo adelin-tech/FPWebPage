@@ -31,7 +31,7 @@ function firstPromoterCapture() {
     return;
   }
 
-  ["click", "mousedown", "touchstart"].forEach(evt => {
+  ["mousedown", "touchstart"].forEach(evt => {
     submitBtn.addEventListener(evt, () => {
       const email = emailField.value.trim();
 	  const uid = "uid_" + Date.now();
@@ -67,6 +67,7 @@ window.addEventListener("load", firstPromoterCapture);
   </form>
 </body>
 </html>
+
 
 
 
