@@ -38,7 +38,7 @@ function firstPromoterCapture() {
 		console.log("email:", email);
 		console.log("uid:", uid);
         console.log("FP referral sent →", email, uid);
-        fpr("referral", { email: email, uid: uid };
+        fpr("referral", { email: email}, {uid: uid});
     });
   });
 }
@@ -67,6 +67,7 @@ window.addEventListener("load", firstPromoterCapture);
   </form>
 </body>
 </html>
+
 
 
 
