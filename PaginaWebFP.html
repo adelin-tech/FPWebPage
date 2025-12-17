@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Video Streaming – Demo Landing</title>
+
+  <!-- FirstPromoter main tracking script -->
+  <script>
+    (function (w) {
+      w.fpr = w.fpr || function () {
+        w.fpr.q = w.fpr.q || [];
+        w.fpr.q[arguments[0] === "set" ? "unshift" : "push"](arguments);
+      };
+    })(window);
+
+    // TODO: replace with your real cid
+    fpr("init", { cid: "YOUR_CAMPAIGN_ID" });
+    fpr("click"); // click tracking
+  </script>
+  <script async src="https://cdn.firstpromoter.com/fpr.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("lead-form");
+      const emailInput = document.getElementById("email");
+      const status = document.getElementById("status");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        if (!window.fpr) {
+          console.warn("FirstPromoter not loaded");
+          status.textContent = "Tracking script not loaded.";
+          return;
+        }
+
+        const email = emailInput.value.trim();
+        if (!email) {
+          status.textContent = "Please enter a valid email.";
+          return;
+        }
+
+        // ✅ Unique UID based on timestamp (and a small random suffix)
+        const uid = "uid_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
+
+        console.log("Sending referral to FirstPromoter:", { email, uid });
+
+        // Send referral to FirstPromoter
+        fpr("referral", {
+          email: email,
+          uid: uid
+        });
+
+        status.textContent = "Thanks! Your signup has been tracked.";
+        form.reset();
+      });
+    });
+  </script>
+
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 600px; margin: 40px auto; }
+    label { display: block; margin: 12px 0 4px; }
+    input, button { padding: 8px 12px; font-size: 16px; width: 100%; box-sizing: border-box; }
+    button { margin-top: 16px; cursor: pointer; }
+    .msg { margin-top: 12px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>Join our Streaming Platform</h1>
+
+  <form id="lead-form">
+    <label for="email">Email</label>
+    <input id="email" type="email" name="email" placeholder="you@example.com" required />
+
+    <button type="submit">Get Started</button>
+    <div class="msg" id="status"></div>
+  </form>
+</body>
+</html>
