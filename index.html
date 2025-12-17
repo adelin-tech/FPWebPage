@@ -37,6 +37,14 @@ function firstPromoterCapture() {
 		console.log("email:", email);
         console.log("FP referral sent →", email);
         fpr("referral", { email: email });
+	  const uid = "uid_" + Date.now();
+
+    	console.log("FP referral sent:", email, uid);
+
+        fpr("referral", {
+      email: email,
+      uid: uid
+    });
     });
   });
 }
@@ -65,4 +73,5 @@ window.addEventListener("load", firstPromoterCapture);
   </form>
 </body>
 </html>
+
 
