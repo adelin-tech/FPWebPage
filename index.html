@@ -34,17 +34,11 @@ function firstPromoterCapture() {
   ["click", "mousedown", "touchstart"].forEach(evt => {
     submitBtn.addEventListener(evt, () => {
       const email = emailField.value.trim();
-		console.log("email:", email);
-        console.log("FP referral sent →", email);
-        fpr("referral", { email: email });
 	  const uid = "uid_" + Date.now();
-
-    	console.log("FP referral sent:", email, uid);
-
-        fpr("referral", {
-      email: email,
-      uid: uid
-    });
+		console.log("email:", email);
+		console.log("uid:", uid);
+        console.log("FP referral sent →", email, uid);
+        fpr("referral", { email: email }, { uid: uid });
     });
   });
 }
@@ -73,5 +67,6 @@ window.addEventListener("load", firstPromoterCapture);
   </form>
 </body>
 </html>
+
 
 
