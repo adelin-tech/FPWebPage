@@ -5,56 +5,45 @@
   <title>Video Streaming – Demo Landing</title>
 
   <!-- FirstPromoter main tracking script -->
-  <script>
-    (function (w) {
-      w.fpr = w.fpr || function () {
-        w.fpr.q = w.fpr.q || [];
-        w.fpr.q[arguments[0] === "set" ? "unshift" : "push"](arguments);
-      };
-    })(window);
-
-    // TODO: replace with your real cid
-    fpr("init", { cid: "YOUR_CAMPAIGN_ID" });
-    fpr("click"); // click tracking
-  </script>
-  <script async src="https://cdn.firstpromoter.com/fpr.js"></script>
+ <script>(function(w){w.fpr=w.fpr||function(){w.fpr.q = w.fpr.q||[];w.fpr.q[arguments[0]=='set'?'unshift':'push'](arguments);};})(window);
+fpr("init", {cid:"tox6q99t"}); 
+fpr("click");
+</script>
+<script src="https://cdn.firstpromoter.com/fpr.js" async></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const form = document.getElementById("lead-form");
-      const emailInput = document.getElementById("email");
-      const status = document.getElementById("status");
+	
+function firstPromoterCapture() {
+  if (!window.fpr) return;
 
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
+  const form = document.querySelector("form");
+  if (!form) return;
 
-        if (!window.fpr) {
-          console.warn("FirstPromoter not loaded");
-          status.textContent = "Tracking script not loaded.";
-          return;
-        }
+  const emailField = form.querySelector(
+    'input[type="email"], input[name*="email"], input[id*="email"]'
+  );
 
-        const email = emailInput.value.trim();
-        if (!email) {
-          status.textContent = "Please enter a valid email.";
-          return;
-        }
+  const submitBtn = form.querySelector(
+    'button[type="submit"], button.wp-element-button, input[type="submit"], .wp-block-button__link'
+  );
 
-        // ✅ Unique UID based on timestamp (and a small random suffix)
-        const uid = "uid_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
+  if (!emailField || !submitBtn) {
+    console.warn("FirstPromoter not connected: email or button not found");
+    return;
+  }
 
-        console.log("Sending referral to FirstPromoter:", { email, uid });
-
-        // Send referral to FirstPromoter
-        fpr("referral", {
-          email: email,
-          uid: uid
-        });
-
-        status.textContent = "Thanks! Your signup has been tracked.";
-        form.reset();
-      });
+  ["click", "mousedown", "touchstart"].forEach(evt => {
+    submitBtn.addEventListener(evt, () => {
+      const email = emailField.value.trim();
+		console.log("email:", email);
+        console.log("FP referral sent →", email);
+        fpr("referral", { email: email });
     });
-  </script>
+  });
+}
+
+window.addEventListener("load", firstPromoterCapture);
+</script>
+<script type="text/javascript"> _fprom=window._fprom||[];window._fprom=_fprom;_fprom.push(["url_tracking",true]); if (window.$FPROM){ $FPROM.trackVisitor({url_tracking: true})} else if(window.fpr) fpr("urlTracking");</script>
 
   <style>
     body { font-family: system-ui, sans-serif; max-width: 600px; margin: 40px auto; }
@@ -76,3 +65,4 @@
   </form>
 </body>
 </html>
+
